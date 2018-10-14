@@ -3,8 +3,7 @@ import numpy as np
 import os
 import matplotlib.pyplot as plt
 
-np.set_
-DATA_PATH = '/home/jiewend/workplace/microCar/doc'
+DATA_PATH = '../doc'
 
 def getEachDistFromFile(filePath):
     df = pd.read_csv(filePath, encoding='utf-8', header=None, dtype ={0:str, 1:np.float64, 2:np.float64})
@@ -43,25 +42,46 @@ def microcar(expList, actList):
         actHorizontalArr = np.append(actHorizontalArr, h)
         actVerticalArr = np.append(actVerticalArr, v)
         actDistancesArr = np.append(actDistancesArr, d)
-    print  expHorizontalArr, expVerticalArr, actHorizontalArr, actVerticalArr, expDistancesArr, actDistancesArr       
     return [expHorizontalArr, expVerticalArr, actHorizontalArr, actVerticalArr, expDistancesArr, actDistancesArr]
+
 def plotmicrocar(expList, actList):
     data = microcar(expList, actList)
     carCount = len(data[0])
+    distPost = np.arange(carCount) - 0.15
+    fig1 = plt.figure(1)
+    plt.bar(distPost, data[-2], alpha=0.5, width=0.3, color='blue', label='Exp')
+    plt.bar(distPost + 0.3, data[-1], alpha=1, width=0.3, color='black', label='Actual')
+    plt.title('Distance')
+    plt.legend()
+    fig1.savefig('../doc/Distance.jpeg')
 
-    distPost = np.arange(carCount * 3)
-    dist = expDistancesArr
+    fig2 = plt.figure(2)
+    forplot = np.array([data[0], data[1]])
+    for i in range(carCount):
+        plt.scatter(forplot[0, i], forplot[1, i], label='mivCar'+str(i))
+    plt.xlim(-60, 60)
+    plt.ylim(-60, 60)
+    plt.legend(loc='upper left')
+    plt.title('Exp')
+    plt.xlabel('x Displacement')
+    plt.ylabel(('v Disp (m)'))
+    fig2.savefig('../doc/Exp.jpeg')
 
-    # fig1 = plt.figure()
-    # ax = plt.subplot(111)
-    plt.bar(distPost, dist, align='center', alpha=0.5)
-    plt.save('a.jpeg')
+    fig3  = plt.figure(3)
+    forplot = np.array([data[2], data[3]])
+    for i in range(carCount):
+        plt.scatter(forplot[0, i], forplot[1, i], label='mivCar' + str(i), marker='x')
+    plt.xlim(-60, 60)
+    plt.ylim(-60, 60)
+    plt.legend(loc='upper left')
+    plt.title('actuals')
+    plt.xlabel('x Displacement')
+    plt.ylabel(('v Disp (m)'))
+    fig3.savefig('../doc/actual.jpeg')
 
-
+    plt.show()
 
 if __name__ == '__main__':
-
-    # aa = microcar(['exp1.csv', 'exp2.csv'], ['act1.csv', 'act2.csv'])
     plotmicrocar(['exp1.csv', 'exp2.csv'], ['act1.csv', 'act2.csv'])
 
     

@@ -3,7 +3,8 @@ import numpy as np
 import os
 import matplotlib.pyplot as plt
 
-DATA_PATH = '../doc'
+LIB_PATh = os.path.dirname(os.path.realpath(__file__))
+DATA_PATH = os.path.join(LIB_PATh, '../doc')
 
 def getEachDistFromFile(filePath):
     df = pd.read_csv(filePath, encoding='utf-8', header=None, dtype ={0:str, 1:np.float64, 2:np.float64})

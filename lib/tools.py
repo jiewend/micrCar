@@ -1,4 +1,3 @@
-import pandas as pd
 import numpy as np
 import os
 import matplotlib.pyplot as plt
@@ -6,25 +5,29 @@ import matplotlib.pyplot as plt
 LIB_PATh = os.path.dirname(os.path.realpath(__file__))
 DATA_PATH = os.path.join(LIB_PATh, '../doc')
 
+
 def getEachDistFromFile(filePath):
-    df = pd.read_csv(filePath, encoding='utf-8', header=None, dtype ={0:str, 1:np.float64, 2:np.float64})
+    lines = open(filePath).readlines()
     horizontal = 0
     vertical = 0
     distances = 0
-    for i in range(len(df)):
-        move = df.iloc[i][1] * df.iloc[i][2]
-        if df.iloc[i][0] == 'E':
+    for line in lines:
+        lineContain = line.split(',')
+        move = np.float64(lineContain[1]) * np.float64(lineContain[2])
+        if lineContain[0] == 'E':
             horizontal += move
-        if df.iloc[i][0] == 'W':
+        if lineContain[0] == 'W':
             horizontal -= move
-
-        if df.iloc[i][0] == 'N':
+        if lineContain[0] == 'N':
             vertical += move
-        if df.iloc[i][0] == 'S':
+        if lineContain[0] == 'S':
             vertical -= move
-        distances += move
-    print horizontal, vertical, distances
+        distances += move    
+    print(horizontal, vertical, distances)
     return round(horizontal, 2), round(vertical, 2), round(distances, 2)
+
+
+
 
 def microcar(expList, actList):
     expHorizontalArr = np.array([])
@@ -84,4 +87,4 @@ def plotmicrocar(expList, actList):
 
 if __name__ == '__main__':
     microcar(['exp1.csv', 'exp2.csv'], ['act1.csv', 'act2.csv'])
-    plotmicrocar(['exp1.csv', 'exp2.csv'], ['act1.csv', 'act2.csv'])
+    # plotmicrocar(['exp1.csv', 'exp2.csv'], ['act1.csv', 'act2.csv'])

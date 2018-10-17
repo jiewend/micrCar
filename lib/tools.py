@@ -23,7 +23,7 @@ def getEachDistFromFile(filePath):
         if lineContain[0] == 'S':
             vertical -= move
         distances += move    
-    print(horizontal, vertical, distances)
+    print horizontal, vertical, distances
     return round(horizontal, 2), round(vertical, 2), round(distances, 2)
 
 

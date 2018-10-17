@@ -23,7 +23,7 @@ def getEachDistFromFile(filePath):
         if df.iloc[i][0] == 'S':
             vertical -= move
         distances += move
-    # print horizontal, vertical, distances
+    print horizontal, vertical, distances
     return round(horizontal, 2), round(vertical, 2), round(distances, 2)
 
 def microcar(expList, actList):
@@ -83,7 +83,5 @@ def plotmicrocar(expList, actList):
     plt.show()
 
 if __name__ == '__main__':
+    microcar(['exp1.csv', 'exp2.csv'], ['act1.csv', 'act2.csv'])
     plotmicrocar(['exp1.csv', 'exp2.csv'], ['act1.csv', 'act2.csv'])
-
-    
-
